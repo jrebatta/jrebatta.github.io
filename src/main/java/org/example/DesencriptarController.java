@@ -9,13 +9,10 @@ public class DesencriptarController {
 
     @GetMapping("/desencriptar/{textoEncriptado}")
     public String desencriptarTexto(@PathVariable String textoEncriptado) {
-        String textoDesencriptado = desencriptar(textoEncriptado);
-        return "<div style='font-size: 200px;'>" + textoDesencriptado + "</div>";
+        return desencriptar(textoEncriptado);
     }
 
-
     public static String desencriptar(String textoEncriptado) {
-        // Implementación de tu método desencriptar
         return getString(textoEncriptado);
     }
 
