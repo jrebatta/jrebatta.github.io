@@ -3,472 +3,847 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - Juan Ernesto Rebatta Atoche</title>
+    <title>Mi Rutina Semanal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
             padding: 20px;
+            color: #fff;
         }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
+
         .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            color: white;
-            padding: 40px;
             text-align: center;
+            margin-bottom: 24px;
         }
-        
+
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
             font-weight: 700;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
         }
-        
-        .header h2 {
-            font-size: 1.3em;
-            font-weight: 400;
-            margin-bottom: 20px;
-            opacity: 0.95;
+
+        .header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
         }
-        
-        .contact-info {
+
+        .tabs {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            font-size: 0.95em;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
         }
-        
-        .contact-info span {
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #00d9ff, #00ff88);
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .day-content {
+            display: none;
+        }
+
+        .day-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .day-header {
             display: flex;
             align-items: center;
-            gap: 5px;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .section {
-            margin-bottom: 35px;
-        }
-        
-        .section-title {
-            color: #2c3e50;
-            font-size: 1.6em;
+            gap: 12px;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3498db;
-            font-weight: 600;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
         }
-        
-        .summary {
-            text-align: justify;
-            line-height: 1.8;
-            color: #555;
-        }
-        
-        .highlight-box {
-            background: #e8f4f8;
-            border-left: 4px solid #3498db;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .highlight-box strong {
-            color: #2c3e50;
-            font-size: 1.05em;
-        }
-        
-        .job {
-            margin-bottom: 25px;
-        }
-        
-        .job-header {
+
+        .day-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .day-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .day-header .focus {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Day-specific colors */
+        .lunes .day-icon { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+        .martes .day-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .miercoles .day-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .jueves .day-icon { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .exercise-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .exercise-card:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateX(4px);
+        }
+
+        .exercise-card.cardio {
+            border-left: 3px solid #00d9ff;
+        }
+
+        .exercise-card.strength {
+            border-left: 3px solid #00ff88;
+        }
+
+        .exercise-card.core {
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .exercise-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .exercise-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .exercise-detail {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .exercise-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .exercise-link:hover {
+            background: rgba(255,0,0,0.4);
+            transform: scale(1.1);
+        }
+
+        .exercise-link svg {
+            width: 20px;
+            height: 20px;
+            fill: #ff4444;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        .rest-day {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .rest-day-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .rest-day h3 {
+            font-size: 1.5rem;
             margin-bottom: 8px;
-            flex-wrap: wrap;
         }
-        
-        .job-title {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: #2c3e50;
+
+        .rest-day p {
+            color: rgba(255,255,255,0.5);
         }
-        
-        .job-company {
-            font-weight: 600;
-            color: #3498db;
-            font-size: 1.1em;
+
+        /* Progress checkbox */
+        .check-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
-        
-        .job-date {
-            color: #7f8c8d;
-            font-style: italic;
-            font-size: 0.95em;
+
+        .check-btn.checked {
+            background: linear-gradient(135deg, #00d9ff, #00ff88);
+            border-color: transparent;
         }
-        
-        .job-location {
-            color: #7f8c8d;
-            font-size: 0.9em;
+
+        .check-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #1a1a2e;
+            stroke-width: 3;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
-        
-        .job ul {
-            margin-left: 20px;
-            margin-top: 10px;
+
+        .check-btn.checked svg {
+            opacity: 1;
         }
-        
-        .job li {
-            margin-bottom: 8px;
-            color: #555;
+
+        .exercise-card.completed {
+            opacity: 0.6;
         }
-        
-        .education-item {
-            margin-bottom: 15px;
+
+        .exercise-card.completed .exercise-name {
+            text-decoration: line-through;
         }
-        
-        .education-title {
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 1.05em;
+
+        .progress-bar {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
         }
-        
-        .education-institution {
-            color: #3498db;
-            font-size: 0.95em;
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border-radius: 10px;
+            transition: width 0.5s ease;
         }
-        
-        .education-date {
-            color: #7f8c8d;
-            font-size: 0.9em;
-        }
-        
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        
-        .skill-category {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            border-left: 4px solid #3498db;
-        }
-        
-        .skill-category-title {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-        
-        .skill-category-content {
-            color: #555;
-            font-size: 0.95em;
-        }
-        
-        .certifications {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 10px;
-        }
-        
-        .cert-item {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 5px;
-            color: #555;
-            font-size: 0.95em;
-        }
-        
-        .cert-item.destacado {
-            background: #e8f4f8;
-            border: 2px solid #3498db;
-            font-weight: 600;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-                max-width: 100%;
-            }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Juan Ernesto Rebatta Atoche</h1>
-            <h2>Quality Engineer | QA Automation Engineer</h2>
-            <div class="contact-info">
-                <span>📞 +51 991840235</span>
-                <span>📧 juan214rebatta@hotmail.com</span>
-                <span>🌐 linkedin.com/in/juanernestorebattaatoche</span>
+    <div class="header">
+        <h1>💪 Mi Rutina Semanal</h1>
+        <p>¡Cada día cuenta, cada esfuerzo suma!</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" onclick="showDay('lunes')">Lunes</button>
+        <button class="tab" onclick="showDay('martes')">Martes</button>
+        <button class="tab" onclick="showDay('miercoles')">Miércoles</button>
+        <button class="tab" onclick="showDay('jueves')">Jueves</button>
+        <button class="tab" onclick="showDay('viernes')">Viernes</button>
+        <button class="tab" onclick="showDay('sabado')">Sábado</button>
+        <button class="tab" onclick="showDay('domingo')">Domingo</button>
+    </div>
+
+    <!-- LUNES -->
+    <div id="lunes" class="day-content active lunes">
+        <div class="day-header">
+            <div class="day-icon">🔥</div>
+            <div>
+                <h2>Lunes</h2>
+                <span class="focus">Cardio + Core</span>
             </div>
         </div>
-        
-        <div class="content">
-            <div class="section">
-                <h3 class="section-title">Perfil Profesional</h3>
-                <p class="summary">
-                    Quality Engineer con más de <strong>5 años de experiencia</strong> en pruebas automatizadas, diseño de estrategias de testing y análisis de requerimientos en proyectos de alta complejidad (banca, seguros, telecomunicaciones, e-commerce). Especializado en <strong>automatización de Frontend, Backend, APIs y Mobile</strong> utilizando <strong>Java (principal), JavaScript, C#/.NET y Ruby</strong> con frameworks como <strong>Selenium, Serenity BDD, Appium, Playwright, Karate DSL y RestAssured</strong>.
-                </p>
-                
-                <div class="highlight-box">
-                    <strong>✓ Conocimiento ISTQB Foundation:</strong> Aplico técnicas y estrategias ISTQB (partición de equivalencia, valores límite, tablas de decisión, transición de estados) en el diseño y ejecución de casos de prueba para maximizar cobertura y efectividad. Certificación en proceso.
-                </div>
-                
-                <p class="summary">
-                    Experto en <strong>gestión del ciclo completo de pruebas</strong> y en <strong>CI/CD</strong> con Jenkins, Git, Maven y Gradle. Dominio de <strong>Jira-Xray, QMetry, JMeter, k6 y OWASP ZAP</strong>. Aplicación de patrones <strong>Page Object Model y Screenplay</strong>. Experiencia comprobada en metodologías <strong>Agile/Scrum/Kanban</strong> y prácticas DevOps.
-                </p>
-            </div>
-            
-            <div class="section">
-                <h3 class="section-title">Experiencia Profesional</h3>
-                
-                <div class="job">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-company">Encora Inc.</div>
-                            <div class="job-title">Senior QA Automation Engineer</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="job-date">Julio 2025 – Actualidad (3 meses)</div>
-                            <div class="job-location">Lima, Perú</div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li><strong>Análisis de requerimientos</strong> funcionales y no funcionales para eCommerce de Pacífico (Vida Devolución Total, Seguros de Viajes, Vida Inversión Base)</li>
-                        <li><strong>Elaboración de estrategia de pruebas</strong> integral para Frontend, Backend y microservicios</li>
-                        <li><strong>Diseño e implementación de casos de prueba</strong> manuales aplicando técnicas ISTQB (partición de equivalencia, valores límite, tablas de decisión)</li>
-                        <li><strong>Desarrollo de pruebas automatizadas</strong>: Frontend con <strong>Playwright (TypeScript/JavaScript)</strong> y Backend con <strong>Karate DSL</strong></li>
-                        <li><strong>Ejecución de pruebas de rendimiento, carga y estrés</strong> con <strong>k6</strong>, integradas a Grafana/Prometheus para monitoreo continuo</li>
-                        <li><strong>Integración continua (CI/CD)</strong>: Despliegue automatizado de pruebas en repositorios FE y BE usando Jenkins y Git</li>
-                        <li><strong>Gestión de pruebas con QMetry + Jira</strong>: Actualización automática de casos de prueba y creación de Test Cycles para trazabilidad completa</li>
-                        <li><strong>Identificación, registro y seguimiento de defectos</strong> hasta su resolución antes de producción</li>
-                        <li><strong>Verificación de cambios en ambiente productivo</strong> post-deployment</li>
-                    </ul>
-                </div>
-                
-                <div class="job">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-company">Inetum</div>
-                            <div class="job-title">QA Automation Engineer</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="job-date">Septiembre 2024 – Junio 2025 (10 meses)</div>
-                            <div class="job-location">Lima, Perú</div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li><strong>Análisis de requerimientos</strong> y elaboración de estrategia de pruebas para productos de seguros digitales</li>
-                        <li><strong>Estimación, priorización y planificación</strong> de actividades de prueba en sprints Agile/Scrum</li>
-                        <li><strong>Diseño e implementación de casos de prueba</strong> manuales y automatizados aplicando técnicas ISTQB</li>
-                        <li><strong>Automatización con Playwright (JavaScript)</strong> para Frontend y <strong>Karate DSL</strong> para APIs REST</li>
-                        <li><strong>Pruebas de rendimiento con k6</strong> para validar performance bajo carga</li>
-                        <li><strong>CI/CD</strong>: Integración de pruebas automatizadas en repositorios con Jenkins, Git y Maven</li>
-                        <li><strong>Gestión con Jira-Xray</strong> para tracking de casos de prueba y defectos</li>
-                        <li><strong>Verificación en producción</strong> de releases y hotfixes</li>
-                    </ul>
-                </div>
-                
-                <div class="job">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-company">Yape</div>
-                            <div class="job-title">QA Automation Engineer</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="job-date">Mayo 2023 – Marzo 2024 (11 meses)</div>
-                            <div class="job-location">Lima, Perú</div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li><strong>Análisis de requerimientos</strong> para funcionalidad "Cambiar dólares" en aplicación fintech</li>
-                        <li><strong>Elaboración de estrategia de pruebas</strong> considerando pruebas funcionales, de integración, performance y seguridad</li>
-                        <li><strong>Diseño de casos de prueba</strong> aplicando técnicas ISTQB: partición de equivalencia, valores límite y tablas de decisión para validaciones financieras críticas</li>
-                        <li><strong>Automatización de APIs con Ruby + RestClient</strong>, pruebas móviles con <strong>Appium</strong> y web con <strong>Selenium WebDriver</strong></li>
-                        <li><strong>Pruebas de microservicios</strong> con Postman para validación de contratos e integraciones</li>
-                        <li><strong>Pruebas de rendimiento con k6</strong> para garantizar escalabilidad</li>
-                        <li><strong>Pruebas de seguridad con OWASP ZAP</strong> para detección de vulnerabilidades en APIs</li>
-                        <li><strong>Gestión de defectos en Jira</strong> y seguimiento hasta cierre antes de producción</li>
-                    </ul>
-                </div>
-                
-                <div class="job">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-company">Softtek</div>
-                            <div class="job-title">QA Automation Engineer</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="job-date">Junio 2022 – Mayo 2023 (1 año)</div>
-                            <div class="job-location">Lima, Perú</div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li><strong>Liderazgo en implementación</strong> de framework de automatización para proyecto Mi Claro Empresas</li>
-                        <li><strong>Diseño e implementación de pruebas automatizadas</strong> con <strong>Serenity BDD + Selenium WebDriver (Java)</strong> aplicando patrón <strong>Screenplay</strong></li>
-                        <li><strong>Elaboración de estrategia de testing continuo</strong> integrando shift-left practices</li>
-                        <li><strong>Configuración de CI/CD</strong> con Jenkins para ejecución remota y generación de reportes HTML automatizados con Serenity</li>
-                        <li><strong>Gestión del ciclo de vida de pruebas</strong> en metodología Agile/Scrum</li>
-                        <li><strong>Preparación de data de prueba</strong> y validaciones en bases de datos relacionales</li>
-                        <li><strong>Documentación de resultados</strong> con métricas exportadas a Excel para stakeholders</li>
-                    </ul>
-                </div>
-                
-                <div class="job">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-company">NTT DATA Europe & LATAM</div>
-                            <div class="job-title">QA Automation Engineer</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="job-date">Mayo 2021 – Marzo 2022 (11 meses)</div>
-                            <div class="job-location">Lima, Perú</div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li><strong>Análisis de requerimientos</strong> y estimación de pruebas para banca móvil BCP y web Telecrédito</li>
-                        <li><strong>Diseño e implementación de casos de prueba</strong> automatizados aplicando técnicas ISTQB para escenarios bancarios complejos</li>
-                        <li><strong>Automatización móvil con Appium (Java)</strong> para aplicaciones Android/iOS nativas</li>
-                        <li><strong>Automatización web con Selenium WebDriver</strong> aplicando patrón <strong>Page Object Model</strong></li>
-                        <li><strong>Ejecución de pruebas de regresión continua</strong> para mantener estabilidad de releases</li>
-                        <li><strong>Validaciones en bases de datos relacionales (SQL)</strong> para verificar integridad transaccional</li>
-                        <li><strong>Versionamiento con Git</strong> y colaboración en equipo SCRUM</li>
-                        <li><strong>Gestión de defectos</strong> y seguimiento hasta resolución</li>
-                    </ul>
-                </div>
-                
-                <div class="job">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-company">Tsoft</div>
-                            <div class="job-title">Analista QA - Automatización y Pruebas Funcionales</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="job-date">Marzo 2019 – Enero 2021 (1 año 11 meses)</div>
-                            <div class="job-location">Lima, Perú</div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li><strong>Análisis y refinamiento de requerimientos</strong> con Product Owner y equipo Scrum</li>
-                        <li><strong>Estimación y planificación de actividades de prueba</strong> funcionales y automatizadas</li>
-                        <li><strong>Creación de planes de prueba y casos de prueba claros y concisos en Gherkin (Cucumber + BDD)</strong></li>
-                        <li><strong>Diseño sistemático de casos de prueba</strong> usando técnicas ISTQB: valores límite, partición de equivalencia, transición de estados</li>
-                        <li><strong>Ejecución de pruebas funcionales</strong>: regresión, integración, exploratorias en web y mobile (Android)</li>
-                        <li><strong>Automatización de pruebas</strong> con frameworks BDD</li>
-                        <li><strong>Validación de datos en BD relacionales</strong> (PostgreSQL, MySQL, SQL Server)</li>
-                        <li><strong>Gestión de defectos en Jira</strong>: registro, verificación y seguimiento</li>
-                        <li><strong>Metodología Agile/Scrum</strong>: participación en dailies, refinements, sprint reviews y retrospectivas</li>
-                    </ul>
+        <div class="exercise-list" data-day="lunes">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Elíptica</div>
+                    <div class="exercise-detail">25 minutos</div>
                 </div>
             </div>
-            
-            <div class="section">
-                <h3 class="section-title">Educación</h3>
-                <div class="education-item">
-                    <div class="education-title">Ingeniería de Sistemas</div>
-                    <div class="education-institution">Universidad Peruana de Ciencias Aplicadas (UPC)</div>
-                    <div class="education-date">2021 – 2025 (Egresado)</div>
+            <div class="exercise-card core">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🎯</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Abdominales</div>
+                    <div class="exercise-detail">15 reps × 3 series</div>
                 </div>
-                <div class="education-item">
-                    <div class="education-title">Profesional Técnico en Computación e Informática</div>
-                    <div class="education-institution">Cibertec</div>
-                    <div class="education-date">2017 – 2021</div>
+                <a href="https://www.youtube.com/shorts/HLAPlJhxqEE" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card core">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🦵</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Elevaciones de piernas</div>
+                    <div class="exercise-detail">12 reps × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/KxWX2jGMe8I" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card core">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🧘</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Planchas</div>
+                    <div class="exercise-detail">10 reps × 3 series</div>
                 </div>
             </div>
-            
-            <div class="section">
-                <h3 class="section-title">Certificaciones y Formación Continua</h3>
-                <div class="certifications">
-                    <div class="cert-item destacado">✓ ISTQB Foundation Level (Conocimiento aplicado - Certificación en proceso)</div>
-                    <div class="cert-item">✓ Scrum Fundamentals Certified</div>
-                    <div class="cert-item">✓ SQL for Data Science (Coursera)</div>
-                    <div class="cert-item">✓ Distributed Computing with Spark SQL</div>
-                    <div class="cert-item">✓ Programming for Everybody - Python (Coursera)</div>
-                    <div class="cert-item">✓ Using Python to Access Web Data</div>
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">⭐</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Saltos de tijera</div>
+                    <div class="exercise-detail">30 seg × 5 series</div>
                 </div>
             </div>
-            
-            <div class="section">
-                <h3 class="section-title">Competencias Técnicas</h3>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Lenguajes de Programación</div>
-                        <div class="skill-category-content"><strong>Java (principal - 5 años)</strong>, JavaScript/TypeScript, C#/.NET, Ruby, Python</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Frameworks de Automatización</div>
-                        <div class="skill-category-content"><strong>Selenium WebDriver</strong>, <strong>Serenity BDD</strong>, <strong>Appium</strong>, <strong>Playwright</strong>, <strong>Karate DSL</strong>, <strong>Cucumber</strong>, RestAssured, RestClient</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Gestión de Pruebas</div>
-                        <div class="skill-category-content"><strong>Jira-Xray</strong>, <strong>QMetry</strong>, TestRail, Zephyr</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Bases de Datos (SQL)</div>
-                        <div class="skill-category-content"><strong>PostgreSQL</strong>, <strong>MySQL</strong>, <strong>SQL Server</strong>, MongoDB (NoSQL)</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Testing de APIs y Microservicios</div>
-                        <div class="skill-category-content"><strong>Postman</strong>, <strong>SoapUI</strong>, Karate DSL, RestAssured, Insomnia</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 CI/CD e Integración Continua</div>
-                        <div class="skill-category-content"><strong>Jenkins</strong>, <strong>Git</strong>, <strong>GitHub Actions</strong>, <strong>Bitbucket</strong>, <strong>GitLab</strong>, <strong>Maven</strong>, <strong>Gradle</strong>, Artifactory</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Pruebas de Rendimiento</div>
-                        <div class="skill-category-content"><strong>JMeter</strong>, <strong>k6</strong> (con InfluxDB/Grafana/Prometheus), Azure Load Testing</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Pruebas de Seguridad</div>
-                        <div class="skill-category-content"><strong>OWASP ZAP</strong>, Burpsuite (conocimiento básico)</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Patrones de Diseño</div>
-                        <div class="skill-category-content"><strong>Page Object Model (POM)</strong>, <strong>Screenplay Pattern</strong></div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Metodologías Ágiles</div>
-                        <div class="skill-category-content"><strong>Agile</strong>, <strong>Scrum</strong>, <strong>Kanban</strong>, DevOps, Testing Continuo (Shift-Left, Shift-Right)</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Técnicas y Estrategias de Prueba</div>
-                        <div class="skill-category-content"><strong>Técnicas ISTQB</strong>: Partición de Equivalencia, Valores Límite, Tablas de Decisión, Transición de Estados, Pruebas Exploratorias, Análisis de Riesgos</div>
-                    </div>
-                    <div class="skill-category">
-                        <div class="skill-category-title">🔹 Redacción de Casos de Prueba</div>
-                        <div class="skill-category-content"><strong>Gherkin (BDD)</strong>, Planes de Prueba, Estrategias de Testing, Documentación Técnica</div>
-                    </div>
-                </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 5 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~35</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">🔥</div>
+                <div class="stat-label">Intensidad</div>
             </div>
         </div>
     </div>
+
+    <!-- MARTES -->
+    <div id="martes" class="day-content martes">
+        <div class="day-header">
+            <div class="day-icon">💪</div>
+            <div>
+                <h2>Martes</h2>
+                <span class="focus">Tren Superior</span>
+            </div>
+        </div>
+        <div class="exercise-list" data-day="martes">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Elíptica</div>
+                    <div class="exercise-detail">7 minutos (calentamiento)</div>
+                </div>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🏋️</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Press de pecho en el suelo</div>
+                    <div class="exercise-detail">12 reps × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/jSKqdRTfICo" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚣</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Remo con mancuernas</div>
+                    <div class="exercise-detail">12 reps × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/-CU28KNFmpU" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">💪</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Curl de bíceps</div>
+                    <div class="exercise-detail">12 reps × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/WrpQYs_n_Pw" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🦾</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Extensión de tríceps</div>
+                    <div class="exercise-detail">12 reps × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/z4dTmGzJVG0" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🥊</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Golpes al aire con mancuernas</div>
+                    <div class="exercise-detail">30 seg × 4 series</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 6 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~40</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">💪</div>
+                <div class="stat-label">Fuerza</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MIERCOLES -->
+    <div id="miercoles" class="day-content miercoles">
+        <div class="day-header">
+            <div class="day-icon">🌊</div>
+            <div>
+                <h2>Miércoles</h2>
+                <span class="focus">Cardio + Core</span>
+            </div>
+        </div>
+        <div class="exercise-list" data-day="miercoles">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Elíptica</div>
+                    <div class="exercise-detail">30 minutos</div>
+                </div>
+            </div>
+            <div class="exercise-card core">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🔄</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Russian twist con pesa rusa</div>
+                    <div class="exercise-detail">16 reps × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/rTTBzWIsUIM" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card core">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">⛰️</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Mountain climbers</div>
+                    <div class="exercise-detail">30 seg × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/Fb79R7IUwYE" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card core">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🧘</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Plancha lateral</div>
+                    <div class="exercise-detail">30 seg por lado × 3 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/fNsxKTKfMNI" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 4 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~45</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">🌊</div>
+                <div class="stat-label">Resistencia</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JUEVES -->
+    <div id="jueves" class="day-content jueves">
+        <div class="day-header">
+            <div class="day-icon">🦿</div>
+            <div>
+                <h2>Jueves</h2>
+                <span class="focus">Tren Inferior + Hombros</span>
+            </div>
+        </div>
+        <div class="exercise-list" data-day="jueves">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Elíptica</div>
+                    <div class="exercise-detail">5 minutos (calentamiento)</div>
+                </div>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🏋️</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Sentadillas con pesas</div>
+                    <div class="exercise-detail">15 reps × 4 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/Ky94GeKMwvs" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🔱</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Peso muerto con pesas rusas</div>
+                    <div class="exercise-detail">12 reps × 4 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/LJINQnrjHJI" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🎯</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Press hombros</div>
+                    <div class="exercise-detail">12 reps × 4 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/7R0P0dVbKWk" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card strength">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚶</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Zancadas</div>
+                    <div class="exercise-detail">10 por pierna × 4 series</div>
+                </div>
+                <a href="https://www.youtube.com/shorts/PP8o3mliQMY" target="_blank" class="exercise-link">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Elíptica</div>
+                    <div class="exercise-detail">10 minutos (enfriamiento)</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 6 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~50</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">🦿</div>
+                <div class="stat-label">Potencia</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIERNES -->
+    <div id="viernes" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🧘‍♂️</div>
+            <h3>Día de Recuperación Activa</h3>
+            <p>Estiramientos, caminata ligera o yoga</p>
+        </div>
+    </div>
+
+    <!-- SABADO -->
+    <div id="sabado" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🎮</div>
+            <h3>Día Libre</h3>
+            <p>Descansa y recarga energías</p>
+        </div>
+    </div>
+
+    <!-- DOMINGO -->
+    <div id="domingo" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">☀️</div>
+            <h3>Día Libre</h3>
+            <p>Prepárate para la nueva semana</p>
+        </div>
+    </div>
+
+    <script>
+        function showDay(dayId) {
+            // Hide all content
+            document.querySelectorAll('.day-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show selected day
+            document.getElementById(dayId).classList.add('active');
+            
+            // Activate corresponding tab
+            event.target.classList.add('active');
+            
+            // Load progress for this day
+            loadProgress(dayId);
+        }
+
+        function toggleExercise(btn) {
+            btn.classList.toggle('checked');
+            const card = btn.closest('.exercise-card');
+            card.classList.toggle('completed');
+            
+            // Get current day
+            const dayContent = btn.closest('.day-content');
+            const dayId = dayContent.id;
+            
+            // Update progress
+            updateProgress(dayId);
+            
+            // Save to localStorage
+            saveProgress(dayId);
+        }
+
+        function updateProgress(dayId) {
+            const dayContent = document.getElementById(dayId);
+            const exerciseList = dayContent.querySelector('.exercise-list');
+            if (!exerciseList) return;
+            
+            const total = exerciseList.querySelectorAll('.exercise-card').length;
+            const completed = exerciseList.querySelectorAll('.check-btn.checked').length;
+            const percentage = (completed / total) * 100;
+            
+            const progressFill = dayContent.querySelector('.progress-fill');
+            const progressText = dayContent.querySelector('.progress-text');
+            
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+            }
+            if (progressText) {
+                progressText.textContent = `${completed} de ${total} ejercicios completados`;
+            }
+        }
+
+        function saveProgress(dayId) {
+            const dayContent = document.getElementById(dayId);
+            const checkBtns = dayContent.querySelectorAll('.check-btn');
+            const progress = [];
+            
+            checkBtns.forEach((btn, index) => {
+                progress.push(btn.classList.contains('checked'));
+            });
+            
+            const today = new Date().toDateString();
+            const key = `workout_${dayId}_${today}`;
+            localStorage.setItem(key, JSON.stringify(progress));
+        }
+
+        function loadProgress(dayId) {
+            const today = new Date().toDateString();
+            const key = `workout_${dayId}_${today}`;
+            const saved = localStorage.getItem(key);
+            
+            if (saved) {
+                const progress = JSON.parse(saved);
+                const dayContent = document.getElementById(dayId);
+                const checkBtns = dayContent.querySelectorAll('.check-btn');
+                
+                checkBtns.forEach((btn, index) => {
+                    if (progress[index]) {
+                        btn.classList.add('checked');
+                        btn.closest('.exercise-card').classList.add('completed');
+                    }
+                });
+                
+                updateProgress(dayId);
+            }
+        }
+
+        // Load progress for default day on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress('lunes');
+            
+            // Auto-select today's day
+            const days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+            const today = days[new Date().getDay()];
+            
+            // Find and click the today's tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                if (tab.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === today) {
+                    tab.click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
