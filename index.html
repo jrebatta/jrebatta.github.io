@@ -123,9 +123,9 @@
 
         /* Day-specific colors */
         .lunes .day-icon { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
-        .martes .day-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
-        .miercoles .day-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
-        .jueves .day-icon { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .miercoles .day-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .viernes .day-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .domingo .day-icon { background: linear-gradient(135deg, #fa709a, #fee140); }
 
         .exercise-list {
             display: flex;
@@ -372,7 +372,7 @@
                     <div class="exercise-name">Abdominales</div>
                     <div class="exercise-detail">15 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/HLAPlJhxqEE" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/HLAPlJhxqEE" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -385,7 +385,7 @@
                     <div class="exercise-name">Elevaciones de piernas</div>
                     <div class="exercise-detail">12 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/KxWX2jGMe8I" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/KxWX2jGMe8I" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -429,15 +429,24 @@
     </div>
 
     <!-- MARTES -->
-    <div id="martes" class="day-content martes">
+    <div id="martes" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🧘‍♂️</div>
+            <h3>Día de Descanso</h3>
+            <p>Recuperación activa: estiramientos o caminata ligera</p>
+        </div>
+    </div>
+
+    <!-- MIERCOLES - Tren Superior -->
+    <div id="miercoles" class="day-content miercoles">
         <div class="day-header">
             <div class="day-icon">💪</div>
             <div>
-                <h2>Martes</h2>
+                <h2>Miércoles</h2>
                 <span class="focus">Tren Superior</span>
             </div>
         </div>
-        <div class="exercise-list" data-day="martes">
+        <div class="exercise-list" data-day="miercoles">
             <div class="exercise-card cardio">
                 <button class="check-btn" onclick="toggleExercise(this)">
                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -457,7 +466,7 @@
                     <div class="exercise-name">Press de pecho en el suelo</div>
                     <div class="exercise-detail">12 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/jSKqdRTfICo" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/jSKqdRTfICo" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -470,7 +479,7 @@
                     <div class="exercise-name">Remo con mancuernas</div>
                     <div class="exercise-detail">12 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/-CU28KNFmpU" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/-CU28KNFmpU" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -483,7 +492,7 @@
                     <div class="exercise-name">Curl de bíceps</div>
                     <div class="exercise-detail">12 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/WrpQYs_n_Pw" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/WrpQYs_n_Pw" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -496,7 +505,7 @@
                     <div class="exercise-name">Extensión de tríceps</div>
                     <div class="exercise-detail">12 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/z4dTmGzJVG0" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/z4dTmGzJVG0" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -529,16 +538,25 @@
         </div>
     </div>
 
-    <!-- MIERCOLES -->
-    <div id="miercoles" class="day-content miercoles">
+    <!-- JUEVES -->
+    <div id="jueves" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🛋️</div>
+            <h3>Día de Descanso</h3>
+            <p>Recuperación activa: estiramientos o caminata ligera</p>
+        </div>
+    </div>
+
+    <!-- VIERNES - Cardio + Core -->
+    <div id="viernes" class="day-content viernes">
         <div class="day-header">
             <div class="day-icon">🌊</div>
             <div>
-                <h2>Miércoles</h2>
+                <h2>Viernes</h2>
                 <span class="focus">Cardio + Core</span>
             </div>
         </div>
-        <div class="exercise-list" data-day="miercoles">
+        <div class="exercise-list" data-day="viernes">
             <div class="exercise-card cardio">
                 <button class="check-btn" onclick="toggleExercise(this)">
                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -558,7 +576,7 @@
                     <div class="exercise-name">Russian twist con pesa rusa</div>
                     <div class="exercise-detail">16 reps × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/rTTBzWIsUIM" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/rTTBzWIsUIM" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -571,7 +589,7 @@
                     <div class="exercise-name">Mountain climbers</div>
                     <div class="exercise-detail">30 seg × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/Fb79R7IUwYE" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/Fb79R7IUwYE" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -584,7 +602,7 @@
                     <div class="exercise-name">Plancha lateral</div>
                     <div class="exercise-detail">30 seg por lado × 3 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/fNsxKTKfMNI" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/fNsxKTKfMNI" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -607,16 +625,25 @@
         </div>
     </div>
 
-    <!-- JUEVES -->
-    <div id="jueves" class="day-content jueves">
+    <!-- SABADO -->
+    <div id="sabado" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🎮</div>
+            <h3>Día Libre</h3>
+            <p>Descansa y recarga energías</p>
+        </div>
+    </div>
+
+    <!-- DOMINGO - Tren Inferior + Hombros -->
+    <div id="domingo" class="day-content domingo">
         <div class="day-header">
             <div class="day-icon">🦿</div>
             <div>
-                <h2>Jueves</h2>
+                <h2>Domingo</h2>
                 <span class="focus">Tren Inferior + Hombros</span>
             </div>
         </div>
-        <div class="exercise-list" data-day="jueves">
+        <div class="exercise-list" data-day="domingo">
             <div class="exercise-card cardio">
                 <button class="check-btn" onclick="toggleExercise(this)">
                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -636,7 +663,7 @@
                     <div class="exercise-name">Sentadillas con pesas</div>
                     <div class="exercise-detail">15 reps × 4 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/Ky94GeKMwvs" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/Ky94GeKMwvs" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -649,7 +676,7 @@
                     <div class="exercise-name">Peso muerto con pesas rusas</div>
                     <div class="exercise-detail">12 reps × 4 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/LJINQnrjHJI" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/LJINQnrjHJI" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -662,7 +689,7 @@
                     <div class="exercise-name">Press hombros</div>
                     <div class="exercise-detail">12 reps × 4 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/7R0P0dVbKWk" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/7R0P0dVbKWk" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -675,7 +702,7 @@
                     <div class="exercise-name">Zancadas</div>
                     <div class="exercise-detail">10 por pierna × 4 series</div>
                 </div>
-                <a href="https://www.youtube.com/shorts/PP8o3mliQMY" target="_blank" class="exercise-link">
+                <a href="https://youtube.com/shorts/PP8o3mliQMY" target="_blank" class="exercise-link">
                     <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
             </div>
@@ -705,33 +732,6 @@
                 <div class="stat-value">🦿</div>
                 <div class="stat-label">Potencia</div>
             </div>
-        </div>
-    </div>
-
-    <!-- VIERNES -->
-    <div id="viernes" class="day-content">
-        <div class="rest-day">
-            <div class="rest-day-icon">🧘‍♂️</div>
-            <h3>Día de Recuperación Activa</h3>
-            <p>Estiramientos, caminata ligera o yoga</p>
-        </div>
-    </div>
-
-    <!-- SABADO -->
-    <div id="sabado" class="day-content">
-        <div class="rest-day">
-            <div class="rest-day-icon">🎮</div>
-            <h3>Día Libre</h3>
-            <p>Descansa y recarga energías</p>
-        </div>
-    </div>
-
-    <!-- DOMINGO -->
-    <div id="domingo" class="day-content">
-        <div class="rest-day">
-            <div class="rest-day-icon">☀️</div>
-            <h3>Día Libre</h3>
-            <p>Prepárate para la nueva semana</p>
         </div>
     </div>
 
