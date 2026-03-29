@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina de Thays</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2d1b2e 0%, #3d1635 50%, #5c1445 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b9d, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #ff6b9d, #c084fc);
+            color: #2d1b2e;
+            font-weight: 600;
+        }
+
+        .day-content {
+            display: none;
+        }
+
+        .day-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+        .day-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .day-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .day-header .focus {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .martes .day-icon { background: linear-gradient(135deg, #ff6b9d, #ff8fab); }
+        .jueves .day-icon { background: linear-gradient(135deg, #c084fc, #a855f7); }
+        .sabado .day-icon { background: linear-gradient(135deg, #f472b6, #ec4899); }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .exercise-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .exercise-card:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateX(4px);
+        }
+
+        .exercise-card.cardio {
+            border-left: 3px solid #ff6b9d;
+        }
+
+        .exercise-card.piernas {
+            border-left: 3px solid #c084fc;
+        }
+
+        .exercise-card.gluteos {
+            border-left: 3px solid #f472b6;
+        }
+
+        .exercise-card.core {
+            border-left: 3px solid #fbbf24;
+        }
+
+        .exercise-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .exercise-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .exercise-detail {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .exercise-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .exercise-link:hover {
+            background: rgba(255,0,0,0.4);
+            transform: scale(1.1);
+        }
+
+        .exercise-link svg {
+            width: 20px;
+            height: 20px;
+            fill: #ff4444;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b9d, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        .rest-day {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .rest-day-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .rest-day h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .rest-day p {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .check-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .check-btn.checked {
+            background: linear-gradient(135deg, #ff6b9d, #c084fc);
+            border-color: transparent;
+        }
+
+        .check-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #2d1b2e;
+            stroke-width: 3;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .check-btn.checked svg {
+            opacity: 1;
+        }
+
+        .exercise-card.completed {
+            opacity: 0.6;
+        }
+
+        .exercise-card.completed .exercise-name {
+            text-decoration: line-through;
+        }
+
+        .progress-bar {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #c084fc);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Rutina de Thays</h1>
+        <p>Piernas, gluteos y quema de grasa</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab" onclick="showDay('lunes', this)">Lunes</button>
+        <button class="tab active" onclick="showDay('martes', this)">Martes</button>
+        <button class="tab" onclick="showDay('miercoles', this)">Miercoles</button>
+        <button class="tab" onclick="showDay('jueves', this)">Jueves</button>
+        <button class="tab" onclick="showDay('viernes', this)">Viernes</button>
+        <button class="tab" onclick="showDay('sabado', this)">Sabado</button>
+        <button class="tab" onclick="showDay('domingo', this)">Domingo</button>
+    </div>
+
+    <!-- LUNES -->
+    <div id="lunes" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🧘‍♀️</div>
+            <h3>Dia de Descanso</h3>
+            <p>Estiramientos suaves o caminata ligera</p>
+        </div>
+    </div>
+
+    <!-- MARTES - Gluteos & Cardio -->
+    <div id="martes" class="day-content active martes">
+        <div class="day-header">
+            <div class="day-icon">🍑</div>
+            <div>
+                <h2>Martes</h2>
+                <span class="focus">Gluteos + Cardio quema grasa</span>
+            </div>
+        </div>
+        <div class="exercise-list" data-day="martes">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Eliptica</div>
+                    <div class="exercise-detail">7 minutos (calentamiento)</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🍑</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Hip thrust con mancuerna</div>
+                    <div class="exercise-detail">15 reps x 4 series | matt + mancuerna</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🦵</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Sentadilla sumo con pesa rusa</div>
+                    <div class="exercise-detail">15 reps x 3 series | pesa rusa</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🔥</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Patada de gluteo con liga</div>
+                    <div class="exercise-detail">12 por pierna x 3 series | matt + liga</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🌉</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Puente de gluteo con liga</div>
+                    <div class="exercise-detail">15 reps x 3 series | matt + liga en rodillas</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🦀</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Caminata lateral con liga</div>
+                    <div class="exercise-detail">12 pasos por lado x 3 series | liga en tobillos</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 6 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~40</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">🍑</div>
+                <div class="stat-label">Gluteos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MIERCOLES -->
+    <div id="miercoles" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">💆‍♀️</div>
+            <h3>Dia de Descanso</h3>
+            <p>Recuperacion activa: estiramientos o yoga suave</p>
+        </div>
+    </div>
+
+    <!-- JUEVES - Piernas & Core -->
+    <div id="jueves" class="day-content jueves">
+        <div class="day-header">
+            <div class="day-icon">🦵</div>
+            <div>
+                <h2>Jueves</h2>
+                <span class="focus">Piernas + Core</span>
+            </div>
+        </div>
+        <div class="exercise-list" data-day="jueves">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Eliptica</div>
+                    <div class="exercise-detail">7 minutos (calentamiento)</div>
+                </div>
+            </div>
+            <div class="exercise-card piernas">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚶‍♀️</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Zancadas con mancuernas</div>
+                    <div class="exercise-detail">12 por pierna x 3 series | mancuernas</div>
+                </div>
+            </div>
+            <div class="exercise-card piernas">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🏋️‍♀️</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Peso muerto rumano con mancuernas</div>
+                    <div class="exercise-detail">12 reps x 4 series | mancuernas</div>
+                </div>
+            </div>
+            <div class="exercise-card piernas">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🦵</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Sentadilla bulgara con mancuernas</div>
+                    <div class="exercise-detail">10 por pierna x 3 series | mancuernas + banco</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🐚</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Clamshell con liga</div>
+                    <div class="exercise-detail">15 por lado x 3 series | matt + liga</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🔥</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Extension de cadera en matt con liga</div>
+                    <div class="exercise-detail">15 por pierna x 3 series | matt + liga</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 6 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~40</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">🦵</div>
+                <div class="stat-label">Piernas</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIERNES -->
+    <div id="viernes" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🛍️</div>
+            <h3>Dia Libre</h3>
+            <p>Descansa y recarga energias</p>
+        </div>
+    </div>
+
+    <!-- SABADO - Piernas, Gluteos & HIIT -->
+    <div id="sabado" class="day-content sabado">
+        <div class="day-header">
+            <div class="day-icon">🔥</div>
+            <div>
+                <h2>Sabado</h2>
+                <span class="focus">Piernas, Gluteos + HIIT quema grasa</span>
+            </div>
+        </div>
+        <div class="exercise-list" data-day="sabado">
+            <div class="exercise-card cardio">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🚴</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Eliptica</div>
+                    <div class="exercise-detail">7 minutos (calentamiento)</div>
+                </div>
+            </div>
+            <div class="exercise-card piernas">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🏋️‍♀️</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Goblet squat con pesa rusa</div>
+                    <div class="exercise-detail">15 reps x 3 series | pesa rusa</div>
+                </div>
+            </div>
+            <div class="exercise-card piernas">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">📦</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Step ups con mancuernas</div>
+                    <div class="exercise-detail">12 por pierna x 3 series | mancuernas + banco</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🐕</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Fire hydrants con liga</div>
+                    <div class="exercise-detail">15 por lado x 3 series | matt + liga</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🍑</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Kickback con liga en matt</div>
+                    <div class="exercise-detail">12 por pierna x 3 series | matt + liga</div>
+                </div>
+            </div>
+            <div class="exercise-card gluteos">
+                <button class="check-btn" onclick="toggleExercise(this)">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <div class="exercise-icon">🦀</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Abduccion de cadera de pie con liga</div>
+                    <div class="exercise-detail">15 por pierna x 3 series | liga en tobillos</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+        <div class="progress-text">0 de 6 ejercicios completados</div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~40</div>
+                <div class="stat-label">Minutos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">🔥</div>
+                <div class="stat-label">HIIT</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOMINGO -->
+    <div id="domingo" class="day-content">
+        <div class="rest-day">
+            <div class="rest-day-icon">🌸</div>
+            <h3>Dia Libre</h3>
+            <p>Preparate para una nueva semana</p>
+        </div>
+    </div>
+
+    <script>
+        function showDay(dayId, tabEl) {
+            document.querySelectorAll('.day-content').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            document.getElementById(dayId).classList.add('active');
+            tabEl.classList.add('active');
+            loadProgress(dayId);
+        }
+
+        function toggleExercise(btn) {
+            btn.classList.toggle('checked');
+            const card = btn.closest('.exercise-card');
+            card.classList.toggle('completed');
+
+            const dayContent = btn.closest('.day-content');
+            const dayId = dayContent.id;
+
+            updateProgress(dayId);
+            saveProgress(dayId);
+        }
+
+        function updateProgress(dayId) {
+            const dayContent = document.getElementById(dayId);
+            const exerciseList = dayContent.querySelector('.exercise-list');
+            if (!exerciseList) return;
+
+            const total = exerciseList.querySelectorAll('.exercise-card').length;
+            const completed = exerciseList.querySelectorAll('.check-btn.checked').length;
+            const percentage = (completed / total) * 100;
+
+            const progressFill = dayContent.querySelector('.progress-fill');
+            const progressText = dayContent.querySelector('.progress-text');
+
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+            }
+            if (progressText) {
+                progressText.textContent = `${completed} de ${total} ejercicios completados`;
+            }
+        }
+
+        function saveProgress(dayId) {
+            const dayContent = document.getElementById(dayId);
+            const checkBtns = dayContent.querySelectorAll('.check-btn');
+            const progress = [];
+
+            checkBtns.forEach((btn) => {
+                progress.push(btn.classList.contains('checked'));
+            });
+
+            const today = new Date().toDateString();
+            const key = `thays_workout_${dayId}_${today}`;
+            localStorage.setItem(key, JSON.stringify(progress));
+        }
+
+        function loadProgress(dayId) {
+            const today = new Date().toDateString();
+            const key = `thays_workout_${dayId}_${today}`;
+            const saved = localStorage.getItem(key);
+
+            if (saved) {
+                try {
+                    const progress = JSON.parse(saved);
+                    const dayContent = document.getElementById(dayId);
+                    const checkBtns = dayContent.querySelectorAll('.check-btn');
+
+                    checkBtns.forEach((btn, index) => {
+                        if (progress[index]) {
+                            btn.classList.add('checked');
+                            btn.closest('.exercise-card').classList.add('completed');
+                        }
+                    });
+
+                    updateProgress(dayId);
+                } catch (e) {
+                    // ignore corrupted data
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+            const today = days[new Date().getDay()];
+
+            const tabs = document.querySelectorAll('.tab');
+            let found = false;
+            tabs.forEach(tab => {
+                if (tab.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === today) {
+                    showDay(today, tab);
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                loadProgress('martes');
+            }
+        });
+    </script>
+</body>
+</html>
